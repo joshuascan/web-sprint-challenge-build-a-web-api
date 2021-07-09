@@ -11,4 +11,6 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
+router.get("/:id", (req, res) => {});
+
 module.exports = router;
