@@ -3,9 +3,13 @@ const Projects = require("./projects-model");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
-  } catch (err) {}
+    const projects = await Projects.get();
+    res.status(200).json(projects);
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get("/:id", (req, res) => {
