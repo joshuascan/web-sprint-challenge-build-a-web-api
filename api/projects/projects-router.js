@@ -42,14 +42,23 @@ router.put(
   }
 );
 
-router.delete("/:id", (req, res) => {
-  res.status(200).json(req.method);
-  console.log(req.method);
+router.delete("/:id", validateProjectId, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const project = await Projects.get(id);
+    await Projects.remove(id);
+    res.status(200).json(project);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.get("/:id/actions", (req, res) => {
-  res.status(200).json(req.method);
-  console.log(req.method);
+router.get("/:id/actions", validateProjectId, (req, res, next) => {
+  Projects.getProjectActions(req.params.id)
+    .then((actions) => {
+      res.status(200).json(actions);
+    })
+    .catch(next);
 });
 
 module.exports = router;
