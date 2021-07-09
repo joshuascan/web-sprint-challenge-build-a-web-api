@@ -17,6 +17,18 @@ const validateProjectId = async (req, res, next) => {
   }
 };
 
+const validateProject = (req, res, next) => {
+  if (req.body.name && req.body.description) {
+    next();
+  } else {
+    next({
+      status: 400,
+      message: "Missing required name and/or description fields",
+    });
+  }
+};
+
 module.exports = {
   validateProjectId,
+  validateProject,
 };
