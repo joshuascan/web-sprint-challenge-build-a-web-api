@@ -1,6 +1,10 @@
 const express = require("express");
 const Projects = require("./projects-model");
-const { validateProjectId, validateProject } = require("./projects-middleware");
+const {
+  validateProjectId,
+  validateProject,
+  validateUpdatedProject,
+} = require("./projects-middleware");
 
 const router = express.Router();
 
@@ -25,10 +29,18 @@ router.post("/", validateProject, (req, res, next) => {
     .catch(next);
 });
 
-router.put("/:id", (req, res) => {
-  res.status(200).json(req.method);
-  console.log(req.method);
-});
+router.put(
+  "/:id",
+  validateProjectId,
+  validateUpdatedProject,
+  (req, res, next) => {
+    Projects.update(req.params.id, req.body)
+      .then((project) => {
+        res.status(200).json(project);
+      })
+      .catch(next);
+  }
+);
 
 router.delete("/:id", (req, res) => {
   res.status(200).json(req.method);

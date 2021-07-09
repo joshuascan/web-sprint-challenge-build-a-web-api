@@ -28,7 +28,23 @@ const validateProject = (req, res, next) => {
   }
 };
 
+const validateUpdatedProject = (req, res, next) => {
+  if (
+    req.body.name &&
+    req.body.description &&
+    req.body.completed !== undefined
+  ) {
+    next();
+  } else {
+    next({
+      status: 400,
+      message: "Missing required name, description, and/or completed fields",
+    });
+  }
+};
+
 module.exports = {
   validateProjectId,
   validateProject,
+  validateUpdatedProject,
 };
