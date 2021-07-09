@@ -3,7 +3,7 @@ const server = express();
 
 const projectsRouter = require("./projects/projects-router");
 const actionsRouter = require("./actions/actions-router");
-const { errorHandling } = require("./generalMiddleware/index");
+const { errorHandling } = require("./generalMiddleware/");
 
 server.use(express.json());
 

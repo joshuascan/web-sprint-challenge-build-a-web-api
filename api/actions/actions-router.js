@@ -32,4 +32,15 @@ router.put("/:id", validateActionId, validateAction, (req, res, next) => {
     .catch(next);
 });
 
+router.delete("/:id", validateActionId, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const action = await Actions.get(id);
+    await Actions.remove(id);
+    res.status(200).json(action);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
